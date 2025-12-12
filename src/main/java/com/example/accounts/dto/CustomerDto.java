@@ -5,16 +5,22 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(
         name = "Customer",
         description = "Schema to hold Customer and Account information"
 )
 public class CustomerDto {
+
+    private Long customerId;
+
+    private Long userId;
 
     @Schema(
             description = "Name of the customer", example = "Eazy Bytes"
@@ -34,7 +40,18 @@ public class CustomerDto {
             description = "Mobile Number of the customer", example = "9345432123"
     )
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
-    private String mobileNumber;
+    private String phoneNumber;
+
+    private String address;
+
+    private String kycId;
+
+    // Masked versions for response
+    private String maskedEmail;
+
+    private String maskedPhoneNumber;
+
+    private String maskedAddress;
 
     @Schema(
             description = "Account details of the Customer"

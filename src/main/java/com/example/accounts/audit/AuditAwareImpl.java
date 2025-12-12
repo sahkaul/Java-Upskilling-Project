@@ -5,7 +5,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component("auditAwareImpl")
+/**
+ * DEPRECATED: Use com.example.accounts.config.AuditAwareImpl instead
+ * This version is kept for reference only
+ */
+// @Component("auditAwareImpl")
 public class AuditAwareImpl implements AuditorAware<String> {
 
     /**

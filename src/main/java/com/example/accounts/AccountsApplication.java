@@ -10,28 +10,30 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableConfigurationProperties(value = {AccountsContactInfoDto.class})
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+@EnableScheduling
 @OpenAPIDefinition(
         info = @Info(
-                title = "Accounts microservice REST API Documentation",
-                description = "EazyBank Accounts microservice REST API Documentation",
+                title = "FinBankX Accounts microservice REST API Documentation",
+                description = "Secure Banking Platform - Accounts Microservice REST API Documentation",
                 version = "v1",
                 contact = @Contact(
-                        name = "Madan Reddy",
-                        email = "tutor@eazybytes.com",
-                        url = "https://www.eazybytes.com"
+                        name = "FinBankX Development Team",
+                        email = "dev@finbankx.com",
+                        url = "https://www.finbankx.com"
                 ),
                 license = @License(
                         name = "Apache 2.0",
-                        url = "https://www.eazybytes.com"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0"
                 )
         ),
         externalDocs = @ExternalDocumentation(
-                description =  "EazyBank Accounts microservice REST API Documentation",
-                url = "https://www.eazybytes.com/swagger-ui.html"
+                description =  "FinBankX Accounts microservice REST API Documentation",
+                url = "https://www.finbankx.com/swagger-ui.html"
         )
 )
 public class AccountsApplication {

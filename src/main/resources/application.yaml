@@ -1,39 +1,68 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   application:
     name: "accounts"
 
-  profiles:
-    active: prod
+  logging:
+    level:
+      root: INFO
+      com.example.accounts: DEBUG
+      com.example.accounts.filter.JWTTokenValidatorFilter: DEBUG
+      com.example.accounts.service: DEBUG
+      com.example.accounts.util: DEBUG
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:mysql://localhost:3306/finbankx?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: password
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 10
+        order_inserts: true
+        order_updates: true
 
-  config:
-    import: "optional:configserver:http://localhost:8071/"
+  task:
+    scheduling:
+      thread-name-prefix: finbankx-
+      pool:
+        size: 5
 
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+app:
+  jwt:
+    secret: "MyJWTSecretKeyForFinBankXMicroserviceThatIsLongEnoughForHS256Algorithm"
+    expiration: 900000  # 15 minutes in milliseconds
+  encryption:
+    key: "finbankx-enc-key-32chars-exactly"
+    algorithm: "AES/GCM/NoPadding"
+    version: 1
+    rotation:
+      enabled: true
+      batch-size: 100
+      age-threshold-days: 10
+  limits:
+    customer:
+      per-transaction: 100000.00
+      daily-aggregate: 500000.00
+    banker:
+      per-transaction: 1000000.00
+      daily-aggregate: 5000000.00
+  audit:
+    retention-days: 365
+  interest:
+    default-annual-rate: 3.5
+    calculation-frequency: DAILY
 

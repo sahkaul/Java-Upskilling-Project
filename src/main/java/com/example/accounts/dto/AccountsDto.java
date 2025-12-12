@@ -1,33 +1,65 @@
 package com.example.accounts.dto;
 
+import com.example.accounts.entity.Account;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(
         name = "Accounts",
         description = "Schema to hold Account information"
 )
 public class AccountsDto {
 
-    @NotEmpty(message = "AccountNumber can not be a null or empty")
-    @Pattern(regexp="(^$|[0-9]{10})",message = "AccountNumber must be 10 digits")
-    @Schema(
-            description = "Account Number of Eazy Bank account", example = "3454433243"
-    )
-    private Long accountNumber;
+    private Long accountId;
+
+    private Long customerId;
+
+    private String accountNumber;
 
     @NotEmpty(message = "AccountType can not be a null or empty")
     @Schema(
-            description = "Account type of Eazy Bank account", example = "Savings"
+            description = "Account type of FinBankX account", example = "SAVINGS"
     )
     private String accountType;
 
+    @Schema(
+            description = "Account Status", example = "ACTIVE"
+    )
+    private String accountStatus;
+
+    @Schema(
+            description = "Account Balance", example = "10000.00"
+    )
+    private BigDecimal balance;
+
+    @Schema(
+            description = "Currency", example = "USD"
+    )
+    private String currency;
+
     @NotEmpty(message = "BranchAddress can not be a null or empty")
     @Schema(
-            description = "Eazy Bank branch address", example = "123 NewYork"
+            description = "FinBankX branch address", example = "123 NewYork"
     )
     private String branchAddress;
+
+    private String maskedAccountNumber;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private String frozenReason;
+
+    private String closedReason;
 }
